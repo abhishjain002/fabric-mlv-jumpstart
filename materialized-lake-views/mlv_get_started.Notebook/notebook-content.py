@@ -20,56 +20,36 @@
 # META   }
 # META }
 
-# CELL ********************
+# MARKDOWN ********************
 
-# MAGIC %%md
-# MAGIC # Materialized Lake Views — Get Started
-# MAGIC
-# MAGIC **Jumpstart: Materialized Lake Views Get Started**
-# MAGIC
-# MAGIC Welcome to the Materialized Lake Views tutorial! In this notebook, you will:
-# MAGIC
-# MAGIC 1. **Create source tables** in a `bronze` schema with sample products and orders data
-# MAGIC 2. **Enable Change Data Feed (CDF)** on source tables for optimal incremental refresh
-# MAGIC 3. **Create materialized lake views** in `silver` and `gold` schemas using the medallion architecture
-# MAGIC 4. **Verify results** by querying the gold materialized lake view
-# MAGIC 5. **Learn about scheduled refresh** and automatic lineage tracking
-# MAGIC
-# MAGIC ### Prerequisites
-# MAGIC - A workspace with a Microsoft Fabric-enabled capacity
-# MAGIC - A lakehouse with **lakehouse schemas enabled** and **Fabric Runtime 1.3**
-# MAGIC
-# MAGIC ### What are Materialized Lake Views?
-# MAGIC Materialized lake views are precomputed, persisted query results stored as Delta tables in your lakehouse.
-# MAGIC They automatically refresh when source data changes, giving you always-up-to-date transformed data
-# MAGIC without manual orchestration.
-# MAGIC
-# MAGIC > **Run each cell below in order.** The notebook is fully self-contained.
+# # Materialized Lake Views — Get Started
+# 
+# **Jumpstart: Materialized Lake Views Get Started**
+# 
+# Welcome to the Materialized Lake Views tutorial! In this notebook, you will:
+# 
+# 1. **Create source tables** in a `bronze` schema with sample products and orders data
+# 2. **Enable Change Data Feed (CDF)** on source tables for optimal incremental refresh
+# 3. **Create materialized lake views** in `silver` and `gold` schemas using the medallion architecture
+# 4. **Verify results** by querying the gold materialized lake view
+# 5. **Learn about scheduled refresh** and automatic lineage tracking
+# 
+# ### What are Materialized Lake Views?
+# Materialized lake views are precomputed, persisted query results stored as Delta tables in your lakehouse.
+# They automatically refresh when source data changes, giving you always-up-to-date transformed data
+# without manual orchestration.
+# 
+# > **Run each cell below in order.** The notebook is fully self-contained.
 
-# METADATA ********************
+# MARKDOWN ********************
 
-# META {
-# META   "language": "markdown",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
-# MAGIC %%md
-# MAGIC ## Step 1: Create Source Tables (Bronze Layer)
-# MAGIC
-# MAGIC We create a `bronze` schema and populate it with two tables:
-# MAGIC - **`bronze.products`** — product catalog with ID, name, and price
-# MAGIC - **`bronze.orders`** — order records with order ID, product reference, quantity, and date
-# MAGIC
-# MAGIC These are the raw source tables that our materialized lake views will transform.
-
-# METADATA ********************
-
-# META {
-# META   "language": "markdown",
-# META   "language_group": "synapse_pyspark"
-# META }
+# ## Step 1: Create Source Tables (Bronze Layer)
+# 
+# We create a `bronze` schema and populate it with two tables:
+# - **`bronze.products`** — product catalog with ID, name, and price
+# - **`bronze.orders`** — order records with order ID, product reference, quantity, and date
+# 
+# These are the raw source tables that our materialized lake views will transform.
 
 # CELL ********************
 
@@ -106,20 +86,12 @@
 # META   "language_group": "synapse_pyspark"
 # META }
 
-# CELL ********************
+# MARKDOWN ********************
 
-# MAGIC %%md
-# MAGIC ### Verify Source Tables
-# MAGIC
-# MAGIC Refresh the **Lakehouse explorer** on the left panel to see the newly created `products` and `orders`
-# MAGIC tables under the `bronze` schema.
-
-# METADATA ********************
-
-# META {
-# META   "language": "markdown",
-# META   "language_group": "synapse_pyspark"
-# META }
+# ### Verify Source Tables
+# 
+# Refresh the **Lakehouse explorer** on the left panel to see the newly created `products` and `orders`
+# tables under the `bronze` schema.
 
 # CELL ********************
 
@@ -136,24 +108,16 @@
 # META   "language_group": "synapse_pyspark"
 # META }
 
-# CELL ********************
+# MARKDOWN ********************
 
-# MAGIC %%md
-# MAGIC ## Step 2: Enable Change Data Feed (CDF)
-# MAGIC
-# MAGIC Change Data Feed tracks row-level changes (inserts, updates, deletes) on Delta tables.
-# MAGIC Enabling CDF on source tables allows materialized lake views to use **incremental refresh** —
-# MAGIC processing only the changed data instead of recomputing everything from scratch.
-# MAGIC
-# MAGIC This is a **one-time setup** per source table. Learn more:
-# MAGIC [Optimal refresh for materialized lake views](https://learn.microsoft.com/en-us/fabric/data-engineering/materialized-lake-views/refresh-materialized-lake-view)
-
-# METADATA ********************
-
-# META {
-# META   "language": "markdown",
-# META   "language_group": "synapse_pyspark"
-# META }
+# ## Step 2: Enable Change Data Feed (CDF)
+# 
+# Change Data Feed tracks row-level changes (inserts, updates, deletes) on Delta tables.
+# Enabling CDF on source tables allows materialized lake views to use **incremental refresh** —
+# processing only the changed data instead of recomputing everything from scratch.
+# 
+# This is a **one-time setup** per source table. Learn more:
+# [Optimal refresh for materialized lake views](https://learn.microsoft.com/en-us/fabric/data-engineering/materialized-lake-views/refresh-materialized-lake-view)
 
 # CELL ********************
 
@@ -168,27 +132,19 @@
 # META   "language_group": "synapse_pyspark"
 # META }
 
-# CELL ********************
+# MARKDOWN ********************
 
-# MAGIC %%md
-# MAGIC ## Step 3: Create Materialized Lake Views (Silver & Gold Layers)
-# MAGIC
-# MAGIC Now we define materialized lake views that implement the **medallion architecture**:
-# MAGIC
-# MAGIC | Layer | View | Purpose |
-# MAGIC |-------|------|---------|
-# MAGIC | **Silver** | `silver.cleaned_order_data` | Joins orders with products, calculates per-order revenue |
-# MAGIC | **Gold** | `gold.product_sales_summary` | Aggregates by product — total quantity, revenue, and average order value |
-# MAGIC
-# MAGIC Materialized lake views are created with `CREATE MATERIALIZED LAKE VIEW` syntax.
-# MAGIC Fabric persists the results as Delta tables and automatically manages refresh.
-
-# METADATA ********************
-
-# META {
-# META   "language": "markdown",
-# META   "language_group": "synapse_pyspark"
-# META }
+# ## Step 3: Create Materialized Lake Views (Silver & Gold Layers)
+# 
+# Now we define materialized lake views that implement the **medallion architecture**:
+# 
+# | Layer | View | Purpose |
+# |-------|------|---------|
+# | **Silver** | `silver.cleaned_order_data` | Joins orders with products, calculates per-order revenue |
+# | **Gold** | `gold.product_sales_summary` | Aggregates by product — total quantity, revenue, and average order value |
+# 
+# Materialized lake views are created with `CREATE MATERIALIZED LAKE VIEW` syntax.
+# Fabric persists the results as Delta tables and automatically manages refresh.
 
 # CELL ********************
 
@@ -230,24 +186,16 @@
 # META   "language_group": "synapse_pyspark"
 # META }
 
-# CELL ********************
+# MARKDOWN ********************
 
-# MAGIC %%md
-# MAGIC ## Step 4: Verify Results
-# MAGIC
-# MAGIC Query the gold materialized lake view to see the aggregated product sales summary.
-# MAGIC You should see **3 rows** — one for each product — with total quantity sold, total revenue,
-# MAGIC and average order value.
-# MAGIC
-# MAGIC Refresh the **Lakehouse explorer** to see `cleaned_order_data` and `product_sales_summary`
-# MAGIC under the `silver` and `gold` schemas respectively.
-
-# METADATA ********************
-
-# META {
-# META   "language": "markdown",
-# META   "language_group": "synapse_pyspark"
-# META }
+# ## Step 4: Verify Results
+# 
+# Query the gold materialized lake view to see the aggregated product sales summary.
+# You should see **3 rows** — one for each product — with total quantity sold, total revenue,
+# and average order value.
+# 
+# Refresh the **Lakehouse explorer** to see `cleaned_order_data` and `product_sales_summary`
+# under the `silver` and `gold` schemas respectively.
 
 # CELL ********************
 
@@ -261,82 +209,58 @@
 # META   "language_group": "synapse_pyspark"
 # META }
 
-# CELL ********************
+# MARKDOWN ********************
 
-# MAGIC %%md
-# MAGIC ### Expected Output
-# MAGIC
-# MAGIC | product_id | product_name | total_quantity_sold | total_revenue | average_order_value |
-# MAGIC |------------|-------------|---------------------|---------------|---------------------|
-# MAGIC | 101 | Laptop | 2 | 2401.00 | 2401.00 |
-# MAGIC | 102 | Smartphone | 3 | 2099.97 | 2099.97 |
-# MAGIC | 103 | Tablet | 1 | 450.00 | 450.00 |
+# ### Expected Output
+# 
+# | product_id | product_name | total_quantity_sold | total_revenue | average_order_value |
+# |------------|-------------|---------------------|---------------|---------------------|
+# | 101 | Laptop | 2 | 2401.00 | 2401.00 |
+# | 102 | Smartphone | 3 | 2099.97 | 2099.97 |
+# | 103 | Tablet | 1 | 450.00 | 450.00 |
 
-# METADATA ********************
+# MARKDOWN ********************
 
-# META {
-# META   "language": "markdown",
-# META   "language_group": "synapse_pyspark"
-# META }
+# ## Step 5: Schedule Refresh & Monitor Lineage
+# 
+# Fabric can automatically keep your materialized lake views up to date as source data changes.
+# Follow these steps to set up scheduled refresh:
+# 
+# ### Set Up Scheduled Refresh
+# 1. **Close this notebook** and go back to your lakehouse
+# 2. Select **Manage materialized lake views (preview)** from the lakehouse menu
+# 3. You should see the auto-generated **lineage graph** showing:
+#    - `bronze.products` → `silver.cleaned_order_data` → `gold.product_sales_summary`
+#    - `bronze.orders` → `silver.cleaned_order_data` → `gold.product_sales_summary`
+# 4. Select **Schedules** from the top ribbon
+# 5. In the Schedules pane, select **On** for Schedule refresh
+# 6. Choose the desired frequency (by the minute, hourly, daily, weekly, or monthly)
+# 7. Specify the recurring interval and select **Apply**
+# 
+# ### How Automatic Refresh Works
+# Once scheduled, Fabric automatically:
+# - **Detects changes** in source tables (`bronze.orders`, `bronze.products`)
+# - **Determines refresh order** based on the lineage graph (silver before gold)
+# - **Chooses the optimal refresh strategy**: incremental (using CDF), full, or skip
+# - **Refreshes dependent views** in the correct order — no orchestration needed!
+# 
+# ### Test the Refresh
+# Try inserting new data into a source table, then wait for the next scheduled run:
+# ```sql
+# INSERT INTO bronze.orders VALUES (1004, 101, 1, '2025-06-04');
+# ```
+# After the refresh completes, `gold.product_sales_summary` will automatically reflect
+# the updated totals for product 101 (Laptop).
 
-# CELL ********************
+# MARKDOWN ********************
 
-# MAGIC %%md
-# MAGIC ## Step 5: Schedule Refresh & Monitor Lineage
-# MAGIC
-# MAGIC Fabric can automatically keep your materialized lake views up to date as source data changes.
-# MAGIC Follow these steps to set up scheduled refresh:
-# MAGIC
-# MAGIC ### Set Up Scheduled Refresh
-# MAGIC 1. **Close this notebook** and go back to your lakehouse
-# MAGIC 2. Select **Manage materialized lake views (preview)** from the lakehouse menu
-# MAGIC 3. You should see the auto-generated **lineage graph** showing:
-# MAGIC    - `bronze.products` → `silver.cleaned_order_data` → `gold.product_sales_summary`
-# MAGIC    - `bronze.orders` → `silver.cleaned_order_data` → `gold.product_sales_summary`
-# MAGIC 4. Select **Schedules** from the top ribbon
-# MAGIC 5. In the Schedules pane, select **On** for Schedule refresh
-# MAGIC 6. Choose the desired frequency (by the minute, hourly, daily, weekly, or monthly)
-# MAGIC 7. Specify the recurring interval and select **Apply**
-# MAGIC
-# MAGIC ### How Automatic Refresh Works
-# MAGIC Once scheduled, Fabric automatically:
-# MAGIC - **Detects changes** in source tables (`bronze.orders`, `bronze.products`)
-# MAGIC - **Determines refresh order** based on the lineage graph (silver before gold)
-# MAGIC - **Chooses the optimal refresh strategy**: incremental (using CDF), full, or skip
-# MAGIC - **Refreshes dependent views** in the correct order — no orchestration needed!
-# MAGIC
-# MAGIC ### Test the Refresh
-# MAGIC Try inserting new data into a source table, then wait for the next scheduled run:
-# MAGIC ```sql
-# MAGIC INSERT INTO bronze.orders VALUES (1004, 101, 1, '2025-06-04');
-# MAGIC ```
-# MAGIC After the refresh completes, `gold.product_sales_summary` will automatically reflect
-# MAGIC the updated totals for product 101 (Laptop).
-
-# METADATA ********************
-
-# META {
-# META   "language": "markdown",
-# META   "language_group": "synapse_pyspark"
-# META }
-
-# CELL ********************
-
-# MAGIC %%md
-# MAGIC ## What's Next?
-# MAGIC
-# MAGIC Congratulations! You've built a working **bronze → silver → gold** pipeline with
-# MAGIC materialized lake views and automatic lineage-based refresh.
-# MAGIC
-# MAGIC ### Learn More
-# MAGIC - [What are materialized lake views?](https://learn.microsoft.com/en-us/fabric/data-engineering/materialized-lake-views/overview-materialized-lake-view)
-# MAGIC - [Spark SQL reference for materialized lake views](https://learn.microsoft.com/en-us/fabric/data-engineering/materialized-lake-views/create-materialized-lake-view)
-# MAGIC - [Refresh behavior (incremental, full, skip)](https://learn.microsoft.com/en-us/fabric/data-engineering/materialized-lake-views/refresh-materialized-lake-view)
-# MAGIC - [Full medallion architecture tutorial](https://learn.microsoft.com/en-us/fabric/data-engineering/materialized-lake-views/tutorial)
-
-# METADATA ********************
-
-# META {
-# META   "language": "markdown",
-# META   "language_group": "synapse_pyspark"
-# META }
+# ## What's Next?
+# 
+# Congratulations! You've built a working **bronze → silver → gold** pipeline with
+# materialized lake views and automatic lineage-based refresh.
+# 
+# ### Learn More
+# - [What are materialized lake views?](https://learn.microsoft.com/en-us/fabric/data-engineering/materialized-lake-views/overview-materialized-lake-view)
+# - [Spark SQL reference for materialized lake views](https://learn.microsoft.com/en-us/fabric/data-engineering/materialized-lake-views/create-materialized-lake-view)
+# - [Refresh behavior (incremental, full, skip)](https://learn.microsoft.com/en-us/fabric/data-engineering/materialized-lake-views/refresh-materialized-lake-view)
+# - [Full medallion architecture tutorial](https://learn.microsoft.com/en-us/fabric/data-engineering/materialized-lake-views/tutorial)
