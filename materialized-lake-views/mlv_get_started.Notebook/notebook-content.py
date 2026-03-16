@@ -117,7 +117,7 @@
 # processing only the changed data instead of recomputing everything from scratch.
 # 
 # This is a **one-time setup** per source table. Learn more:
-# [Optimal refresh for materialized lake views](https://learn.microsoft.com/en-us/fabric/data-engineering/materialized-lake-views/refresh-materialized-lake-view)
+# [Optimal refresh for materialized lake views](https://learn.microsoft.com/fabric/data-engineering/materialized-lake-views/refresh-materialized-lake-view)
 
 # CELL ********************
 
@@ -233,7 +233,7 @@
 #    - `bronze.products` → `silver.cleaned_order_data` → `gold.product_sales_summary`
 #    - `bronze.orders` → `silver.cleaned_order_data` → `gold.product_sales_summary`
 # 4. Select **Schedules** from the top ribbon
-# 5. In the Schedules pane, add **New schedule** and select**On** for Schedule refresh
+# 5. In the Schedules pane, add **New schedule** and select **On** for Schedule refresh
 # 6. Choose the desired frequency (by the minute, hourly, daily, weekly, or monthly)
 # 7. Specify the recurring interval and select **Apply**
 # 
