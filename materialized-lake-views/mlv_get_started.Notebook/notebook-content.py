@@ -228,12 +228,12 @@
 # 
 # ### Set Up Scheduled Refresh
 # 1. **Close this notebook** and go back to your lakehouse
-# 2. Select **Manage materialized lake views (preview)** from the lakehouse menu
+# 2. Select **Materialized lake views** from the lakehouse menu and select **Manage**.
 # 3. You should see the auto-generated **lineage graph** showing:
 #    - `bronze.products` → `silver.cleaned_order_data` → `gold.product_sales_summary`
 #    - `bronze.orders` → `silver.cleaned_order_data` → `gold.product_sales_summary`
 # 4. Select **Schedules** from the top ribbon
-# 5. In the Schedules pane, select **On** for Schedule refresh
+# 5. In the Schedules pane, add **New schedule** and select**On** for Schedule refresh
 # 6. Choose the desired frequency (by the minute, hourly, daily, weekly, or monthly)
 # 7. Specify the recurring interval and select **Apply**
 # 
@@ -260,7 +260,7 @@
 # materialized lake views and automatic lineage-based refresh.
 # 
 # ### Learn More
-# - [What are materialized lake views?](https://learn.microsoft.com/en-us/fabric/data-engineering/materialized-lake-views/overview-materialized-lake-view)
-# - [Spark SQL reference for materialized lake views](https://learn.microsoft.com/en-us/fabric/data-engineering/materialized-lake-views/create-materialized-lake-view)
-# - [Refresh behavior (incremental, full, skip)](https://learn.microsoft.com/en-us/fabric/data-engineering/materialized-lake-views/refresh-materialized-lake-view)
-# - [Full medallion architecture tutorial](https://learn.microsoft.com/en-us/fabric/data-engineering/materialized-lake-views/tutorial)
+# - [What are materialized lake views?](https://learn.microsoft.com/fabric/data-engineering/materialized-lake-views/overview-materialized-lake-view)
+# - [Spark SQL reference for materialized lake views](https://learn.microsoft.com/fabric/data-engineering/materialized-lake-views/create-materialized-lake-view)
+# - [Refresh behavior (Optimal refresh)](https://learn.microsoft.com/fabric/data-engineering/materialized-lake-views/refresh-materialized-lake-view)
+# - [Full medallion architecture tutorial](https://learn.microsoft.com/fabric/data-engineering/materialized-lake-views/tutorial)
